@@ -1,0 +1,17 @@
+{
+  "development": {
+    "database": "welp-front",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "database": "welp-front",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "welp-front",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
