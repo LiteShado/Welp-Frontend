@@ -21,7 +21,7 @@ document.querySelector('#logout-link').addEventListener('click', () => {
   document.querySelector('#home-content').classList.remove('hidden')
 })
 
-document.querySelector('#profile-link').addEventListener('click', () => {
+document.querySelector('#business-link').addEventListener('click', () => {
   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
   document.querySelector('#profile-content').classList.remove('hidden')
 })
