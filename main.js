@@ -61,7 +61,7 @@ document.querySelector('#signup-form').addEventListener('submit', async (event) 
           alert('email is already used by someone')
   }
 
-// })
+})
 
 //login
 
@@ -92,4 +92,3 @@ try {
     alert('login failed')
 }
 })
-
