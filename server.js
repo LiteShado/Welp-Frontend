@@ -10,22 +10,13 @@ const path = require('path')
 
 app.get('/', (req, res) => {
     const filepath = path.join(__dirname, 'index.html')
-    resizeBy.sendFile(filepath)
-})
-
-app.get('/main.js', async (req, res) => {
-    const filepath = path.join(__dirname, 'main.js')
-    resizeBy.sendFile(filepath)
-
-if (process.env.NODE_ENV === 'production') {
-     await replaceInFile({
-        files: filepath,
-        from: 'http://localhost:3001',
-        to: 'https://lyrically-backend.herokuapp.com'
-    })
-  }
     res.sendFile(filepath)
-})
+  })
+
+app.get('/main.js', (req, res) => {
+    const filepath = path.join(__dirname, 'main.js')
+    res.sendFile(filepath)
+  })
 
 
 app.get('/style.css', (req, res) => {
