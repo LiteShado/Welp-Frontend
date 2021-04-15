@@ -13,15 +13,21 @@
         <span id="login-link" class="nav-link">Login</span>
         <span id="signup-link" class="nav-link">Sign Up</span>
         <span id="business-link" class="nav-link">All Businesses</span>
+        <span id="createbusiness-link" class="nav-link">Create A Business</span>
+        <span id="reviews-link" class="nav-link">Business Reviews</span>
         <span id="logout-link" class="nav-link">Logout</span>
       </nav>
 
       <section id="home-content">
+        <br>
         Welcome to WELP!
+        </br>
       </section>
 
       <section class="hidden" id="signup-content">
         <form id="signup-form">
+          <br>
+          <br>
           <label for="signup-name">Name</label>
           <input type="name" id="signup-name">
 
@@ -30,7 +36,7 @@
 
           <label for="signup-password">Password</label>
           <input type="password" id="signup-password">
-          
+
 
           <input type="submit" value="Sign Up!">
         </form>
@@ -38,6 +44,8 @@
 
       <section class="hidden" id="login-content">
         <form id="login-form">
+          <br>
+          <br>
           <label for="login-email">Email</label>
           <input type="text" id="login-email">
 
@@ -48,8 +56,75 @@
         </form>
       </section>
 
-      <section class="hidden" id="business-content">
-        <div id="business-info">Placeholder for business info</div>
+      <section class="hidden" id="allBusiness">
+        <br>
+        <br>
+        <div id="allBusiness">All Businesses</div>
+      </section>
+
+      <!-- //////Once Logged In/////// -->
+
+      <section class="hidden" id="createbusiness">
+        <br>
+        <br>
+        <div id="business-info">List You Business</div>
+          <form id="businessInfoForm">
+            <label for="createName">Business Name</label>
+            <input type="text" id="createName">
+
+            <label for="createAddress">Business Address</label>
+            <input type="text" id="createAddress">
+
+
+            <label for="createDescription">Business Description</label>
+            <input type="text" id="createDescription">
+            <br>
+            <br>
+            <label for="businessType">What Type of Business?</label>
+              <form id="businessType">
+                  <select name="type" id="type">
+                      <option value="retail">Retail/Clothing</option>
+                      <option value="food">Food/Restaurant</option>
+                      <option value="media">Media/Entertainment</option>
+                      <option value="tech">Information Technology</option>
+                      <option value="law">Legal</option>
+                  </select>
+                  <button type="submit" value="submit">Create My Business</button>
+              </form>
+          </form>
+      </section>
+
+      <section class="hidden" id="reviews">
+        <br>
+        <br>
+        <div id="reviews">Business Review</div>
+        <form id="reviews">
+          <label for="reviewHeadline">Headline</label>
+          <input type="text" id="reviewHeadline">
+          <label for="reviewContent">My Review</label>
+          <input type="text" id="reviewContent">
+          <select name="reviews" id="reviews">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <button type="submit" value="submit">Leave my Review!</button>
+          </select>
+      </form>
+
+      </section>
+
+      <section class="hidden" id="leaveReview-content">
+        <div id="business-info">Leave A Review</div>
+      </section>
+
+      <section class="hidden" id="deleteReview-content">
+        <div id="business-info">Delete A Review</div>
+      </section>
+
+      <section class="hidden" id="deleteBusiness-content">
+        <div id="business-info">Delete A Business</div>
       </section>
 
     <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js "></script>
