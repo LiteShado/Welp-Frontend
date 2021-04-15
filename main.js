@@ -1,5 +1,3 @@
-
-
 //Log In Log Out functions
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
