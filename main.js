@@ -1,5 +1,3 @@
-
-
 //Log In Log Out functions
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
@@ -126,11 +124,33 @@ document.querySelector('#business-link').addEventListener('click', async (event)
 })
 
 //create business
-document.querySelector('#createbusiness-link').addEventListener('click', async (event) => {
+document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
   event.preventDefault()
 
-  const userId = response.data.user.id
-  localStorage.getItem('userId', userId)
+  let name = document.querySelector('#createName').value
+  let address = document.querySelector('#createAddress').value
+  let description = document.querySelector('#createDescription').value
+  let typeid = document.querySelector('#selectedType').value
+  let typeText = document.querySelector(`.option${typeid}`).innerText
+
+  console.log(name)
+  console.log(address)
+  console.log(description)
+  console.log(typeid)
+  console.log(typeText)
+
+  try {
+     const response = await axios.post(`http://localhost:3001/businesses/${1}/${typeid}`,{
+      name: name,
+      address: address,
+      businessType: typeText, 
+      description: description,
+      typeId: typeid,
+      userId: userId
+  })
+  } catch (error) {
+    res.json(error)
+  }
 })
 
 //reviews
@@ -146,4 +166,6 @@ document.querySelector('#logout-link').addEventListener('click', async (event) =
   const userId = response.data.user.id
   localStorage.clearItem('userId', userId)
   showLoggedOut()
+
+  
 })
