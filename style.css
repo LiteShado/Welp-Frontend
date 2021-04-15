@@ -1,0 +1,48 @@
+.hidden {
+    display: none;
+}
+
+.nav-link {
+    color: white;
+    margin: 0.5em;
+    padding: 10px;
+    font: 20px Copperplate;
+    background-color: red;
+}
+
+.nav-link:hover {
+  cursor: crosshair;
+}
+
+.nav {
+    align-items: center;
+    border-bottom: 2px solid red;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .loginButton:hover {
+    color: white;
+    background-color: #ed1b24;
+  }
+  .signUpButton:hover {
+    color: white;
+    background-color: #ed1b24;
+  }
+  input[type="submit"]:hover {
+    color: white;
+    background-color: #ed1b24;
+  }
+  .signUpButton,
+  .loginButton {
+    width: 400px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    margin: 10px 0;
+    padding: 10px 0;
+    background-color: #23408e;
+    color: white;
+  }
