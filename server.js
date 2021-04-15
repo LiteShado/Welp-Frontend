@@ -21,7 +21,7 @@ app.get('/main.js', (req, res) => {
 
 app.get('/style.css', (req, res) => {
     const filepath = path.join(__dirname, 'style.css')
-    resizeBy.sendFile(filepath)
+    res.type('css').sendFile(filepath)
 })
 
 const port = process.env.PORT || 3000

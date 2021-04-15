@@ -25,23 +25,15 @@ document.querySelector('#business-link').addEventListener('click', () => {
 })
 
 
-//logged-in state
-// if(localStorage.getItem('userId')){
-//   loggedIn()
-//   showDashBoard()
-// }else{
-//   loggedOut()
-// }
 
 
 
 
 //signup
-// document.querySelector('#signup-link').addEventListener('click', () => {
-  // showSection('.signup-board')
+
 document.querySelector('#signup-form').addEventListener('submit', async (event) => {
   event.preventDefault()
-  // const name = document.querySelector('#name').value -needs to be added to main.js and HTML
+ 
   const name = document.querySelector('#signup-name').value
   const email = document.querySelector('#signup-email').value
   const password = document.querySelector('#signup-password').value
@@ -81,15 +73,9 @@ try {
   localStorage.setItem('userId', userId)
   // console.log(userId)
 
-  // document.querySelector('.signup-form').classList.add('hidden')
-  // document.querySelector('.login-form').classList.add('hidden')
-  // document.querySelector('.dashboardScreen').classList.remove('hidden')
-  // document.querySelector('.login-screen').innerText = `Welcome back ${response.data.user.name}! you are successfully logged in`
-
   alert(`Welcome back ${response.data.user.name}! you are successfully logged in`)
 } catch (error) {
     console.log(error)
     alert('login failed')
 }
 })
-
