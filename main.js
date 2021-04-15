@@ -153,7 +153,6 @@ document.querySelector('#business-link').addEventListener('click', async (event)
 
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
         document.querySelector('#singlebusiness').classList.remove('hidden')
-
          let response = await axios.get(`http://localhost:3001/businesses/${j+1}`)
          let businessName = document.querySelector('.businessName')
          let businessAddress = document.querySelector('.businessAddress')
