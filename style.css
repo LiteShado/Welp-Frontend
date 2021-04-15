@@ -3,10 +3,10 @@
 }
 
 body {
-    border: 1px solid red;
+    border: 10px solid red;
     background-image: url("welp.gif");
     background-repeat: repeat;
-    background-color: #cccccc;
+    background-color: #831902;
     margin: 0 auto;
     align-content: center;
     justify-content: center;
@@ -15,13 +15,15 @@ body {
     font-size: larger;
     width: 2000px;
     height: 2000px;
+    color: white;
+    font-size: 25px;
 
 }
 
 .color {
     align-content: center;
     justify-content: center;
-    background-color: lightgray;
+    background-color: #280000;
     border:darkred 8px groove;
     margin: 0 auto;
     margin-top: 1px;
@@ -32,12 +34,16 @@ body {
 .colorr {
     align-content: center;
     justify-content: center;
-    background-color: lightgray;
-    border: solid white 9px;
+    background-color: #570000;
+    border: 20px solid transparent;
+    background-image: url("welp.gif");
+    background-repeat: repeat;
+    /* border-color: #cccccc; */
     margin: 0 auto;
     margin-top: 50px;
     width: 1015px;
-    height: 801px;
+    height: 802px;
+
 }
 
 
@@ -46,7 +52,7 @@ body {
     margin: 1.0em;
     padding: 10px;
     font: 20px Copperplate;
-    background-color: red;
+    background-color: #ed1b24;
     /* display: flex; */
     justify-content: space-between;
     align-items: center;
@@ -101,11 +107,12 @@ body {
   input[type="submit"] {
     font-size: 1.2rem;
     border: black;
-    border: 2px solid blue;
-    padding: 3px;
+    border: 2px solid #DE7C5A;
+    padding: 15px;
     cursor: crosshair;
-    background-color: #23408e;
+    background-color: #DE7C5A;
     color: white;
+    font-family: monospace;
   }
 
   .loginButton:hover {
