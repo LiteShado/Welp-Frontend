@@ -64,6 +64,7 @@ document.querySelector('#deletebusiness-link').addEventListener('click', () => {
 
 
 
+
 //signup
 
 document.querySelector('#signup-form').addEventListener('submit', async (event) => {
@@ -95,7 +96,7 @@ document.querySelector('#signup-form').addEventListener('submit', async (event) 
 
 document.querySelector('#login-form').addEventListener('submit', async (event) => {
   event.preventDefault()
-  const email = document.querySelector('#login-email').value
+const email = document.querySelector('#login-email').value
 const password = document.querySelector('#login-password').value
 
 try {
