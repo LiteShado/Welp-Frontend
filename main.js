@@ -53,15 +53,15 @@ document.querySelector('#signup-form').addEventListener('submit', async (event) 
           password: password
       })
       // console.log(response)
-      
-        
+
+
       alert('Successfully signed up!')
   } catch (error) {
       // console.log(error)
           alert('email is already used by someone')
   }
 
-// })
+})
 
 //login
 
