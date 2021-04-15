@@ -1,5 +1,3 @@
-
-
 //Log In Log Out functions
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
@@ -125,28 +123,71 @@ document.querySelector('#home-link').addEventListener('click', async (event) => 
 })
 
 //business content
-
-document.querySelector('#allbusiness').addEventListener('click', async (event) => {
-  event.preventDefault()
-
+let i
+document.querySelector('#business-link').addEventListener('click', async (event) => {
+  let response 
+  try {
+    response = await axios.get(`http://localhost:3001/businesses/`)
+    let allbusiness = document.querySelector('#allBusiness')
+    while(allbusiness.firstChild){
+      allbusiness.firstChild.remove()
+    }
+    for ( i =0; i <response.data.business.length; i++){
+      let business = document.createElement("p");
+      business.classList.add (`busines${i}`)
+       business.innerText = response.data.business[i].name
+       allbusiness.append(business)
+      console.log(response.data.business[i].name)
+  
+      // console.log(response.data.business[i].id) need to grab it 
+      // createReview(response.data)
+    }
+    
+  } catch (error) {
+    console.log (error)
+  }
+  
 })
 
 //create business
 document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
   event.preventDefault()
+  const userId = localStorage.getItem('userId')
 
-  const userId = response.data.user.id
-  localStorage.getItem('userId', userId)
+  let name = document.querySelector('#createName').value
+  let address = document.querySelector('#createAddress').value
+  let description = document.querySelector('#createDescription').value
+  let typeid = document.querySelector('#selectedType').value
+  let typeText = document.querySelector(`.option${typeid}`).innerText
 
-  const response = await axios.post('http://localhost:3001/business/:userId', {
-    businessname: businessname,
-    address: address,
-    type: type
-})
-})
+  console.log(name)
+  console.log(address)
+  console.log(description)
+  console.log(typeid)
+  console.log(typeText)
+  console.log(userId)
+
+  try {
+     const response = await axios.post(`http://localhost:3001/businesses/${userId}/${typeid}`,{
+      name: name,
+      address: address,
+      businessType: typeText, 
+      description: description,
+      typeId: typeid,
+      userId: userId
+  })
+  } catch (error) {
+    res.json(error)
+  }
+ })
+
+
+ //// view a single business 
+
+
 
 //reviews
-document.querySelector('#reviews').addEventListener('submit', async (event) => {
+const createReview=(data)=> { document.querySelector('#reviews').addEventListener('submit', async (event) => {
   event.preventDefault()
   let userId = localStorage.getItem('userId')
 
@@ -160,21 +201,21 @@ document.querySelector('#reviews').addEventListener('submit', async (event) => {
   // console.log(rating)
 
 try {
-    const response = await axios.post(`http://localhost:3001/reviews/${businessId}`, {
+    const response = await axios.post(`http://localhost:3001/reviews/${data.business[i].id}`, {
       headline: headline,
       content: content,  
       rating: rating,
-      businessId: businessId,
+      businessId: `${data.business[i].id}`,
       userId: userId
   })
   // console.log(response)
-  const businessId = response.business.id
+
 } catch (error) {
     console.log(error)
     alert('comment added!')
 }
 })
-
+}
 
 //logout
 document.querySelector('#logout').addEventListener('submit', async (event) => {
@@ -190,6 +231,8 @@ document.querySelector('#delete').addEventListener('submit', async (event) => {
   const userId = response.data.user.id
   localStorage.clearItem('userId', userId)
   showLoggedOut()
+
+  
 })
 
 
