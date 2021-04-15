@@ -1,3 +1,5 @@
+
+
 //Log In Log Out functions
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
@@ -126,6 +128,7 @@ document.querySelector('#home-link').addEventListener('click', async (event) => 
 
 //business content
 let i
+let iNum = []
 document.querySelector('#business-link').addEventListener('click', async (event) => {
   let response 
   try {
@@ -136,18 +139,46 @@ document.querySelector('#business-link').addEventListener('click', async (event)
     }
     for ( i =0; i <response.data.business.length; i++){
       let business = document.createElement("p");
-      business.classList.add (`busines${i}`)
+      iNum.push(i)
+      business.classList.add (`business${i}`)
        business.innerText = response.data.business[i].name
        allbusiness.append(business)
       console.log(response.data.business[i].name)
-  
+
     }
+    console.log (iNum)
+     //// view a single business
+     for (let j = 0; j < iNum.length; j ++){
+       document.querySelector(`.business${iNum[j]}`).addEventListener('click', async (event) => {
+
+        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
+        document.querySelector('#singlebusiness').classList.remove('hidden')
+
+         let response = await axios.get(`http://localhost:3001/businesses/${j+1}`)
+         let businessName = document.querySelector('.businessName')
+         let businessAddress = document.querySelector('.businessAddress')
+         let businessType = document.querySelector('.businessType')
+         let businessDescription = document.querySelector('.businessDescription')
+
+         businessName.innerText = response.data.business.name
+         businessAddress.innerText = response.data.business.address
+         businessType.innerText = response.data.business.businessType
+         businessDescription.innerText = response.data.business.description
+   
+       console.log('you clicked on business')
+       })
+
+     }
+  
+    console.log (i)
     
   } catch (error) {
     console.log (error)
   }
   
 })
+
+
 
 //create business
 document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
