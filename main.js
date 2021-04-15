@@ -1,13 +1,17 @@
+
+
 //Log In Log Out functions
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
   document.querySelector('#login-link').classList.add('hidden')
+  
 }
 
 const showLoggedOut = () => {
   document.querySelector('#createbusiness-link').classList.add('hidden')
   document.querySelector('#reviews-link').classList.add('hidden')
   document.querySelector('#logout-link').classList.add('hidden')
+  document.querySelector('#deletebusiness-link').classList.add('hidden')
 }
 
 //Checks for user
@@ -36,12 +40,12 @@ document.querySelector('#login-link').addEventListener('click', () => {
 
 document.querySelector('#logout-link').addEventListener('click', () => {
   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
-  document.querySelector('#home-content').classList.remove('hidden')
+  document.querySelector('#logout-content').classList.remove('hidden')
 })
 
 document.querySelector('#business-link').addEventListener('click', () => {
   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
-  document.querySelector('#allBusiness').classList.remove('hidden')
+  document.querySelector('#allbusiness').classList.remove('hidden')
 })
 
 document.querySelector('#createbusiness-link').addEventListener('click', () => {
@@ -52,6 +56,11 @@ document.querySelector('#createbusiness-link').addEventListener('click', () => {
 document.querySelector('#reviews-link').addEventListener('click', () => {
   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
   document.querySelector('#reviews').classList.remove('hidden')
+})
+
+document.querySelector('#deletebusiness-link').addEventListener('click', () => {
+  document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
+  document.querySelector('#deletebusiness-content').classList.remove('hidden')
 })
 
 
@@ -72,9 +81,7 @@ document.querySelector('#signup-form').addEventListener('submit', async (event) 
           password: password
       })
       // console.log(response)
-      document.querySelector('#logout-link').classList.add('hidden')
-      document.querySelector('#createbusiness-link').classList.add('hidden')
-      document.querySelector('#reviews-link').classList.add('hidden')
+      showLoggedOut()
 
       alert('Successfully signed up!')
   } catch (error) {
@@ -119,29 +126,70 @@ document.querySelector('#home-link').addEventListener('click', async (event) => 
 
 //business content
 
-document.querySelector('#business-link').addEventListener('click', async (event) => {
+document.querySelector('#allbusiness').addEventListener('click', async (event) => {
   event.preventDefault()
+
 })
 
 //create business
-document.querySelector('#createbusiness-link').addEventListener('click', async (event) => {
+document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
   event.preventDefault()
 
   const userId = response.data.user.id
   localStorage.getItem('userId', userId)
+
+  const response = await axios.post('http://localhost:3001/business/:userId', {
+    businessname: businessname,
+    address: address,
+    type: type
+})
 })
 
 //reviews
-document.querySelector('#reviews-link').addEventListener('click', async (event) => {
+document.querySelector('#reviews').addEventListener('submit', async (event) => {
   event.preventDefault()
+  let userId = localStorage.getItem('userId')
 
-  const userId = response.data.user.id
-  localStorage.getItem('userId', userId)
+  const headline = document.querySelector('#reviewHeadline').value
+  const content = document.querySelector('#reviewContent').value
+  const rating = document.querySelector('#rating').value
+ 
+  // console.log(userId)
+  // console.log(headline)
+  // console.log(content)
+  // console.log(rating)
+
+try {
+    const response = await axios.post(`http://localhost:3001/reviews/${businessId}`, {
+      headline: headline,
+      content: content,  
+      rating: rating,
+      businessId: businessId,
+      userId: userId
+  })
+  // console.log(response)
+  const businessId = response.business.id
+} catch (error) {
+    console.log(error)
+    alert('comment added!')
+}
 })
 
-document.querySelector('#logout-link').addEventListener('click', async (event) => {
+
+//logout
+document.querySelector('#logout').addEventListener('submit', async (event) => {
+  event.preventDefault()
+  localStorage.removeItem('userId')
+  location.reload();
+  showLoggedOut()
+})
+
+//delete
+document.querySelector('#delete').addEventListener('submit', async (event) => {
   event.preventDefault()
   const userId = response.data.user.id
   localStorage.clearItem('userId', userId)
   showLoggedOut()
 })
+
+

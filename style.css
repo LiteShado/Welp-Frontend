@@ -3,22 +3,59 @@
 }
 
 body {
+    border: 1px solid red;
+    background-image: url("welp.gif");
+    background-repeat: repeat;
+    background-color: #cccccc;
+    margin: 0 auto;
     align-content: center;
     justify-content: center;
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: larger;
+    /* width: 2000px;
+    height: 2000px; */
+
 }
+
+.color {
+    align-content: center;
+    justify-content: center;
+    background-color: lightgray;
+    border:darkred 8px groove;
+    margin: 0 auto;
+    margin-top: 1px;
+    width: 1000px;
+    height: 800px;
+}
+
+.colorr {
+    align-content: center;
+    justify-content: center;
+    background-color: lightgray;
+    border: solid white 9px;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 1015px;
+    height: 801px;
+}
+
 
 .nav-link {
     color: white;
-    margin: 0.5em;
+    margin: 1.0em;
     padding: 10px;
     font: 20px Copperplate;
     background-color: red;
+    /* display: flex; */
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid darkred;
+    padding: 10px 20px;
+
 }
 
-.nav-link:hover {s
+.nav-link:hover {
   cursor: crosshair;
 }
 
@@ -53,4 +90,28 @@ body {
     padding: 10px 0;
     background-color: #23408e;
     color: white;
+  }
+
+  input {
+    font-size: 1.5rem;
+    color: darkred;
+
+  }
+  input[type="submit"] {
+    font-size: 1.2rem;
+    border: black;
+    border: 2px solid blue;
+    padding: 3px;
+    cursor: crosshair;
+    background-color: #23408e;
+    color: white;
+  }
+
+  .loginButton:hover {
+    color: white;
+    background-color: #ed1b24;
+  }
+  .signUpButton:hover {
+    color: white;
+    background-color: #ed1b24;
   }

@@ -8,6 +8,8 @@
     <title>W E L P!</title>
 </head>
 <body>
+  <div class="colorr">
+  <div class="color">
     <nav>
         <span id="home-link" class="nav-link">Home</span>
         <span id="login-link" class="nav-link">Login</span>
@@ -15,9 +17,9 @@
         <span id="business-link" class="nav-link">All Businesses</span>
         <span id="createbusiness-link" class="nav-link">Create A Business</span>
         <span id="reviews-link" class="nav-link">Business Reviews</span>
+        <span id="deletebusiness-link" class="nav-link">Delete Business</span>
         <span id="logout-link" class="nav-link">Logout</span>
       </nav>
-
       <section id="home-content">
         <br>
         Welcome to WELP!
@@ -36,7 +38,8 @@
 
           <label for="signup-password">Password</label>
           <input type="password" id="signup-password">
-
+          <br>
+          <br>
 
           <input type="submit" value="Sign Up!">
         </form>
@@ -51,12 +54,15 @@
 
           <label for="login-password">Password</label>
           <input type="password" id="login-password">
-
+          <br>
+          <br>
           <input type="submit" value="Log In!">
         </form>
       </section>
 
-      <section class="hidden" id="allBusiness">
+
+      <!-- ALL BUSINESS -->
+      <section class="hidden" id="allbusiness">
         <br>
         <br>
         <div id="allBusiness">All Businesses</div>
@@ -89,7 +95,7 @@
                       <option value="tech">Information Technology</option>
                       <option value="law">Legal</option>
                   </select>
-                  <button type="submit" value="submit">Create My Business</button>
+                  <input type="submit" value="submit">Create My Business</input>
               </form>
           </form>
       </section>
@@ -103,31 +109,49 @@
           <input type="text" id="reviewHeadline">
           <label for="reviewContent">My Review</label>
           <input type="text" id="reviewContent">
-          <select name="reviews" id="reviews">
+          <select name="reviews" id="rating">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
-              <button type="submit" value="submit">Leave my Review!</button>
+              <input type="submit" value="submit">Leave my Review!</input>
           </select>
       </form>
 
       </section>
 
-      <section class="hidden" id="leaveReview-content">
-        <div id="business-info">Leave A Review</div>
-      </section>
 
-      <section class="hidden" id="deleteReview-content">
-        <div id="business-info">Delete A Review</div>
-      </section>
+      <section class="hidden" id="logout-content">
+        <br>
+        <br>
+        <label for="logout">Do You Want To Log Out?</label>
+        <form id="logout">
+            <br>
+            <br>
+            <input type="submit" value="submit">Log Out!</input>
+          </form>
+        </section>
+
+
 
       <section class="hidden" id="deleteBusiness-content">
-        <div id="business-info">Delete A Business</div>
-      </section>
+        <div>Delete A Business</div>
+
+        <label for="deletebusiness">Delete Your Business</label>
+        <form id="delete">
+            <br>
+            <br>
+            <input type="submit" value="submit">Delete!</input>
+        </form>
+
+    </form>
+    </section>
+  </div>
+</div>
 
     <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js "></script>
     <script async defer type="text/javascript" src="/main.js"></script>
+
 </body>
 </html>
