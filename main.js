@@ -124,15 +124,34 @@ document.querySelector('#home-link').addEventListener('click', async (event) => 
 })
 
 //business content
-
-document.querySelector('#allbusiness').addEventListener('click', async (event) => {
-  event.preventDefault()
-
+let i
+document.querySelector('#business-link').addEventListener('click', async (event) => {
+  let response 
+  try {
+    response = await axios.get(`http://localhost:3001/businesses/`)
+    let allbusiness = document.querySelector('#allBusiness')
+    while(allbusiness.firstChild){
+      allbusiness.firstChild.remove()
+    }
+    for ( i =0; i <response.data.business.length; i++){
+      let business = document.createElement("p");
+      business.classList.add (`busines${i}`)
+       business.innerText = response.data.business[i].name
+       allbusiness.append(business)
+      console.log(response.data.business[i].name)
+  
+    }
+    
+  } catch (error) {
+    console.log (error)
+  }
+  
 })
 
 //create business
 document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
   event.preventDefault()
+  const userId = localStorage.getItem('userId')
 
   let name = document.querySelector('#createName').value
   let address = document.querySelector('#createAddress').value
@@ -145,9 +164,10 @@ document.querySelector('#businessInfoForm').addEventListener('submit', async (ev
   console.log(description)
   console.log(typeid)
   console.log(typeText)
+  console.log(userId)
 
   try {
-     const response = await axios.post(`http://localhost:3001/businesses/${1}/${typeid}`,{
+     const response = await axios.post(`http://localhost:3001/businesses/${userId}/${typeid}`,{
       name: name,
       address: address,
       businessType: typeText, 
@@ -158,7 +178,12 @@ document.querySelector('#businessInfoForm').addEventListener('submit', async (ev
   } catch (error) {
     res.json(error)
   }
-})
+ })
+
+
+ //// view a single business 
+
+
 
 //reviews
 document.querySelector('#reviews').addEventListener('submit', async (event) => {
