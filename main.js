@@ -123,6 +123,10 @@ document.querySelector('#home-link').addEventListener('click', async (event) => 
   localStorage.getItem('userId', userId)
 })
 
+
+
+
+
 //business content
 let i
 let iNum = []
@@ -150,24 +154,30 @@ document.querySelector('#business-link').addEventListener('click', async (event)
      //// view a single business
      for (let j = 0; j < iNum.length; j ++){
        document.querySelector(`.business${iNum[j]}`).addEventListener('click', async (event) => {
+        const userId = localStorage.getItem('userId')
         
-
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
         document.querySelector('#singlebusiness').classList.remove('hidden')
         document.querySelector('#reviews').classList.remove('hidden')
-         let response = await axios.get(`http://localhost:3001/businesses/${j+1}`)
+        
+        
+        let response = await axios.get(`http://localhost:3001/businesses/${j+1}`)
+
+        // console.log(response)
+         let businessOwnerName = document.querySelector('.businessOwnerName')
          let businessName = document.querySelector('.businessName')
          let businessAddress = document.querySelector('.businessAddress')
          let businessType = document.querySelector('.businessType')
          let businessDescription = document.querySelector('.businessDescription')
-
+        
+         businessOwnerName.innerText  = `Business Created By: ${response.data.user.name}`
          businessName.innerText = response.data.business.name
          businessAddress.innerText = response.data.business.address
          businessType.innerText = response.data.business.businessType
          businessDescription.innerText = response.data.business.description
    
        console.log('you clicked on business')
-       console.log(response)
+       console.log(response.data.user.name)
       
        let businessId = response.data.business.id
        createReview(businessId)
@@ -186,7 +196,7 @@ document.querySelector('#business-link').addEventListener('click', async (event)
 
 
 //create business
-document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
+ document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
   event.preventDefault()
   const userId = localStorage.getItem('userId')
 
@@ -215,7 +225,7 @@ document.querySelector('#businessInfoForm').addEventListener('submit', async (ev
   } catch (error) {
     res.json(error)
   }
- })
+})
 
 
  //// view a single business 
