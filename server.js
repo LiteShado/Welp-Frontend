@@ -13,8 +13,15 @@ app.get('/', (req, res) => {
     res.sendFile(filepath)
   })
 
-app.get('/main.js', (req, res) => {
+app.get('/main.js', async (req, res) => {
     const filepath = path.join(__dirname, 'main.js')
+    if (process.env.NODE_ENV === 'production'){
+    await replaceInFile({
+      files: filepath,
+      from: 'http://localhost:3001/',
+      to: 'https://welp-group-project-front.herokuapp.com//'
+    })
+   }
     res.sendFile(filepath)
   })
 
