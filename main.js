@@ -1,14 +1,13 @@
 
-
 //Log In Log Out functions
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
   document.querySelector('#login-link').classList.add('hidden')
+  
 }
 
 const showLoggedOut = () => {
   document.querySelector('#createbusiness-link').classList.add('hidden')
-  document.querySelector('#reviews-link').classList.add('hidden')
   document.querySelector('#logout-link').classList.add('hidden')
   document.querySelector('#deletebusiness-link').classList.add('hidden')
 }
@@ -52,10 +51,10 @@ document.querySelector('#createbusiness-link').addEventListener('click', () => {
   document.querySelector('#createbusiness').classList.remove('hidden')
 })
 
-document.querySelector('#reviews-link').addEventListener('click', () => {
-  document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
-  document.querySelector('#reviews').classList.remove('hidden')
-})
+// document.querySelector('#reviews-link').addEventListener('click', () => {
+//   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
+//   document.querySelector('#reviews').classList.remove('hidden')
+// })
 
 document.querySelector('#deletebusiness-link').addEventListener('click', () => {
   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
@@ -81,9 +80,7 @@ document.querySelector('#signup-form').addEventListener('submit', async (event) 
           password: password
       })
       // console.log(response)
-      document.querySelector('#logout-link').classList.add('hidden')
-      document.querySelector('#createbusiness-link').classList.add('hidden')
-      document.querySelector('#reviews-link').classList.add('hidden')
+      showLoggedOut()
 
       alert('Successfully signed up!')
   } catch (error) {
@@ -134,25 +131,30 @@ document.querySelector('#business-link').addEventListener('click', async (event)
   try {
     response = await axios.get(`http://localhost:3001/businesses/`)
     let allbusiness = document.querySelector('#allBusiness')
+
     while(allbusiness.firstChild){
-      allbusiness.firstChild.remove()
+        allbusiness.firstChild.remove()
     }
+
     for ( i =0; i <response.data.business.length; i++){
       let business = document.createElement("p");
       iNum.push(i)
       business.classList.add (`business${i}`)
        business.innerText = response.data.business[i].name
        allbusiness.append(business)
-      console.log(response.data.business[i].name)
-
+      console.log(response.data.business[i])
     }
+
     console.log (iNum)
+
      //// view a single business
      for (let j = 0; j < iNum.length; j ++){
        document.querySelector(`.business${iNum[j]}`).addEventListener('click', async (event) => {
+        
 
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
         document.querySelector('#singlebusiness').classList.remove('hidden')
+        document.querySelector('#reviews').classList.remove('hidden')
          let response = await axios.get(`http://localhost:3001/businesses/${j+1}`)
          let businessName = document.querySelector('.businessName')
          let businessAddress = document.querySelector('.businessAddress')
@@ -165,11 +167,15 @@ document.querySelector('#business-link').addEventListener('click', async (event)
          businessDescription.innerText = response.data.business.description
    
        console.log('you clicked on business')
-       })
+       console.log(response)
+      
+       let businessId = response.data.business.id
+       createReview(businessId)
+       showReviews(businessId)
+      })
 
      }
-  
-    console.log (i)
+    // console.log (i)
     
   } catch (error) {
     console.log (error)
@@ -217,22 +223,72 @@ document.querySelector('#businessInfoForm').addEventListener('submit', async (ev
 
 
 //reviews
-document.querySelector('#reviews').addEventListener('submit', async (event) => {
+const createReview=(businessId)=> { document.querySelector('#reviews').addEventListener('submit', async (event) => {
   event.preventDefault()
+  let userId = localStorage.getItem('userId')
 
-  const userId = response.data.user.id
-  localStorage.getItem('userId', userId)
+  const headline = document.querySelector('#reviewHeadline').value
+  const content = document.querySelector('#reviewContent').value
+  const rating = document.querySelector('#rating').value
+ 
+  // console.log(userId)
+  // console.log(headline)
+  // console.log(content)
+  // console.log(rating)
+
+try {
+    const response = await axios.post(`http://localhost:3001/reviews/${businessId}`, {
+      headline: headline,
+      content: content,  
+      rating: rating,
+      businessId: `${businessId}`,
+      userId: userId
+  })
+  console.log(response)
+  let reviewData = response.data
+  showReviews(businessId)
+
+} catch (error) {
+    console.log(error)
+    alert('comment can not be added')
+}
 })
+}
+
+//Show reviews
+const showReviews = async (businessId) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/businesses/${businessId}/reviews`)
+    // console.log(response)
+
+    let showReview = document.querySelector('.showReview')
+    let reviewDetail = response.data.reviews
+
+    while(showReview.firstChild) {
+      showReview.firstChild.remove()
+}
+
+    for (let i = 0; i < reviewDetail.length; i++) {
+      let h4 = document.createElement('h4')
+      showReview.append(h4)
+       h4.innerText = `Name: ${reviewDetail[i].user.name}, Headline:${reviewDetail[i].headline}, Content:${reviewDetail[i].content}, Rating:${reviewDetail[i].rating} `//this will show new added food
+      } 
+
+  } catch (error) {
+    console.log('cat not get reviews')
+
+  }
+}
 
 
 //logout
-document.querySelector('#logout').addEventListener('submit', async (event) => {
+document.querySelector('#logout-link').addEventListener('click', async (event) => {
   event.preventDefault()
-  const userId = response.data.user.id
-  localStorage.clearItem('userId', userId)
+  localStorage.removeItem('userId')
+  location.reload();
   showLoggedOut()
-
 })
+
 //delete
 document.querySelector('#delete').addEventListener('submit', async (event) => {
   event.preventDefault()
@@ -242,3 +298,5 @@ document.querySelector('#delete').addEventListener('submit', async (event) => {
 
   
 })
+
+
