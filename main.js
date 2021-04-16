@@ -1,3 +1,4 @@
+
 //Log In Log Out functions
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
@@ -7,7 +8,6 @@ const showLoggedIn = () => {
 
 const showLoggedOut = () => {
   document.querySelector('#createbusiness-link').classList.add('hidden')
-  document.querySelector('#reviews-link').classList.add('hidden')
   document.querySelector('#logout-link').classList.add('hidden')
   document.querySelector('#deletebusiness-link').classList.add('hidden')
 }
@@ -51,10 +51,10 @@ document.querySelector('#createbusiness-link').addEventListener('click', () => {
   document.querySelector('#createbusiness').classList.remove('hidden')
 })
 
-document.querySelector('#reviews-link').addEventListener('click', () => {
-  document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
-  document.querySelector('#reviews').classList.remove('hidden')
-})
+// document.querySelector('#reviews-link').addEventListener('click', () => {
+//   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
+//   document.querySelector('#reviews').classList.remove('hidden')
+// })
 
 document.querySelector('#deletebusiness-link').addEventListener('click', () => {
   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
@@ -125,30 +125,65 @@ document.querySelector('#home-link').addEventListener('click', async (event) => 
 
 //business content
 let i
+let iNum = []
 document.querySelector('#business-link').addEventListener('click', async (event) => {
   let response 
   try {
     response = await axios.get(`http://localhost:3001/businesses/`)
     let allbusiness = document.querySelector('#allBusiness')
+
     while(allbusiness.firstChild){
-      allbusiness.firstChild.remove()
+        allbusiness.firstChild.remove()
     }
+
     for ( i =0; i <response.data.business.length; i++){
       let business = document.createElement("p");
-      business.classList.add (`busines${i}`)
+      iNum.push(i)
+      business.classList.add (`business${i}`)
        business.innerText = response.data.business[i].name
        allbusiness.append(business)
-      console.log(response.data.business[i].name)
-  
-      // console.log(response.data.business[i].id) need to grab it 
-      // createReview(response.data)
+      console.log(response.data.business[i])
     }
+
+    console.log (iNum)
+
+     //// view a single business
+     for (let j = 0; j < iNum.length; j ++){
+       document.querySelector(`.business${iNum[j]}`).addEventListener('click', async (event) => {
+        
+
+        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
+        document.querySelector('#singlebusiness').classList.remove('hidden')
+        document.querySelector('#reviews').classList.remove('hidden')
+         let response = await axios.get(`http://localhost:3001/businesses/${j+1}`)
+         let businessName = document.querySelector('.businessName')
+         let businessAddress = document.querySelector('.businessAddress')
+         let businessType = document.querySelector('.businessType')
+         let businessDescription = document.querySelector('.businessDescription')
+
+         businessName.innerText = response.data.business.name
+         businessAddress.innerText = response.data.business.address
+         businessType.innerText = response.data.business.businessType
+         businessDescription.innerText = response.data.business.description
+   
+       console.log('you clicked on business')
+       console.log(response)
+      
+       let businessId = response.data.business.id
+       createReview(businessId)
+       showReviews(businessId)
+      })
+
+     }
+    // console.log (i)
     
   } catch (error) {
     console.log (error)
   }
   
 })
+
+
 
 //create business
 document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
@@ -188,7 +223,7 @@ document.querySelector('#businessInfoForm').addEventListener('submit', async (ev
 
 
 //reviews
-const createReview=(data)=> { document.querySelector('#reviews').addEventListener('submit', async (event) => {
+const createReview=(businessId)=> { document.querySelector('#reviews').addEventListener('submit', async (event) => {
   event.preventDefault()
   let userId = localStorage.getItem('userId')
 
@@ -202,24 +237,52 @@ const createReview=(data)=> { document.querySelector('#reviews').addEventListene
   // console.log(rating)
 
 try {
-    const response = await axios.post(`http://localhost:3001/reviews/${data.business[i].id}`, {
+    const response = await axios.post(`http://localhost:3001/reviews/${businessId}`, {
       headline: headline,
       content: content,  
       rating: rating,
-      businessId: `${data.business[i].id}`,
+      businessId: `${businessId}`,
       userId: userId
   })
-  // console.log(response)
+  console.log(response)
+  let reviewData = response.data
+  showReviews(businessId)
 
 } catch (error) {
     console.log(error)
-    alert('comment added!')
+    alert('comment can not be added')
 }
 })
 }
 
+//Show reviews
+const showReviews = async (businessId) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/businesses/${businessId}/reviews`)
+    // console.log(response)
+
+    let showReview = document.querySelector('.showReview')
+    let reviewDetail = response.data.reviews
+
+    while(showReview.firstChild) {
+      showReview.firstChild.remove()
+}
+
+    for (let i = 0; i < reviewDetail.length; i++) {
+      let h4 = document.createElement('h4')
+      showReview.append(h4)
+       h4.innerText = `Name: ${reviewDetail[i].user.name}, Headline:${reviewDetail[i].headline}, Content:${reviewDetail[i].content}, Rating:${reviewDetail[i].rating} `//this will show new added food
+      } 
+
+  } catch (error) {
+    console.log('cat not get reviews')
+
+  }
+}
+
+
 //logout
-document.querySelector('#logout').addEventListener('submit', async (event) => {
+document.querySelector('#logout-link').addEventListener('click', async (event) => {
   event.preventDefault()
   localStorage.removeItem('userId')
   location.reload();
