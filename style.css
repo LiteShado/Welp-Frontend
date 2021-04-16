@@ -4,7 +4,7 @@
 
 body {
     border: 10px solid red;
-    background-image: url("./welp.gif");
+    /* background-image: src('./welp.gif'); */
     background-repeat: repeat;
     margin: 0 auto;
     align-content: center;
@@ -12,38 +12,13 @@ body {
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: larger;
-    /* width: 2000px;
-    height: 2000px; */
+    width: 80%;
+    /* height: 1000px; */
     color: white;
     font-size: 25px;
 
 }
 
-.color {
-    align-content: center;
-    justify-content: center;
-    background-color: #280000;
-    border:darkred 8px groove;
-    margin: 0 auto;
-    margin-top: 1px;
-    width: 1000px;
-    height: 800px;
-}
-
-.colorr {
-    align-content: center;
-    justify-content: center;
-    background-color: #570000;
-    border: 20px solid transparent;
-    background-image: url("./welp.gif");
-    background-repeat: repeat;
-    /* border-color: #cccccc; */
-    margin: 0 auto;
-    margin-top: 50px;
-    width: 1015px;
-    height: 802px;
-
-}
 
 #allBusiness {
     align-content: center;
@@ -51,12 +26,15 @@ body {
     background-color: #280000;
     border:darkred 3px groove;
     margin: 0 auto;
-    margin-top: 50px;
     width: 800px;
     height: 600px;
     cursor: grabbing;
     font-size: 25px;
+}
 
+h1{
+  background-color: #280000;
+  margin:0 auto 0 auto;
 }
 
 #singlebusiness{
@@ -75,12 +53,33 @@ p:hover {
     background-color: black;
 }
 
+#business-info{
+  align-content: center;
+  justify-content: center;
+  background-color: #280000;
+  border:darkred 3px groove;
+  margin: 0 auto;
+  width: 800px;
+  height: 600px;
+  cursor: grabbing;
+  font-size: 25px;
+}
 
+#login-content, #signup-content, #home-content {
+  align-content: center;
+  justify-content: center;
+  background-color: #280000;
+  border:darkred 3px groove;
+  margin: 10px auto;
+  width: 800px;
+  height: 600px;
+  cursor: grabbing;
+  font-size: 25px;
+}
 
 
 
 .nav-link {
-    color: white;
     margin: 1.0em;
     padding: 10px;
     font: 20px Copperplate;

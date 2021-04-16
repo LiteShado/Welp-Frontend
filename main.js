@@ -3,13 +3,14 @@
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
   document.querySelector('#login-link').classList.add('hidden')
+  document.querySelector('#createbusiness-link').classList.remove('hidden')
+  document.querySelector('#logout-link').classList.remove('hidden')
 
 }
 
 const showLoggedOut = () => {
   document.querySelector('#createbusiness-link').classList.add('hidden')
   document.querySelector('#logout-link').classList.add('hidden')
-  document.querySelector('#deletebusiness-link').classList.add('hidden')
 }
 
 //Checks for user
@@ -51,15 +52,6 @@ document.querySelector('#createbusiness-link').addEventListener('click', () => {
   document.querySelector('#createbusiness').classList.remove('hidden')
 })
 
-// document.querySelector('#reviews-link').addEventListener('click', () => {
-//   document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
-//   document.querySelector('#reviews').classList.remove('hidden')
-// })
-
-document.querySelector('#deletebusiness-link').addEventListener('click', () => {
-  document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
-  document.querySelector('#deletebusiness-content').classList.remove('hidden')
-})
 
 
 
@@ -93,6 +85,7 @@ document.querySelector('#signup-form').addEventListener('submit', async (event) 
 
 document.querySelector('#login-form').addEventListener('submit', async (event) => {
   event.preventDefault()
+
 const email = document.querySelector('#login-email').value
 const password = document.querySelector('#login-password').value
 
@@ -107,21 +100,15 @@ try {
   localStorage.setItem('userId', userId)
   alert(`Welcome back ${response.data.user.name}! you are successfully logged in`)
   showLoggedIn()
+  document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
+  document.querySelector('#home-content').classList.remove('hidden')
 } catch (error) {
     console.log(error)
     alert('login failed')
 }
 })
 
-//home content
 
-document.querySelector('#home-link').addEventListener('click', async (event) => {
-  event.preventDefault()
-  alert(`W E L P!!`)
-
-  const userId = response.data.user.id
-  localStorage.getItem('userId', userId)
-})
 
 //business content
 let i
@@ -150,26 +137,38 @@ document.querySelector('#business-link').addEventListener('click', async (event)
      //// view a single business
      for (let j = 0; j < iNum.length; j ++){
        document.querySelector(`.business${iNum[j]}`).addEventListener('click', async (event) => {
+<<<<<<< HEAD
 
 
+=======
+        const userId = localStorage.getItem('userId')
+
+>>>>>>> 928740a02bd5514ca6c1549ab19bd9d54a7f8802
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
         document.querySelector('#singlebusiness').classList.remove('hidden')
         document.querySelector('#reviews').classList.remove('hidden')
-         let response = await axios.get(`http://localhost:3001/businesses/${j+1}`)
+
+
+        let response = await axios.get(`http://localhost:3001/businesses/${j+1}`)
+
+        // console.log(response)
+         let businessOwnerName = document.querySelector('.businessOwnerName')
          let businessName = document.querySelector('.businessName')
          let businessAddress = document.querySelector('.businessAddress')
          let businessType = document.querySelector('.businessType')
          let businessDescription = document.querySelector('.businessDescription')
 
+         businessOwnerName.innerText  = `Business Created By: ${response.data.user.name}`
          businessName.innerText = response.data.business.name
          businessAddress.innerText = response.data.business.address
          businessType.innerText = response.data.business.businessType
          businessDescription.innerText = response.data.business.description
 
        console.log('you clicked on business')
-       console.log(response)
+       console.log(response.data.user.name)
 
        let businessId = response.data.business.id
+       console.log(businessId)
        createReview(businessId)
        showReviews(businessId)
       })
@@ -186,7 +185,7 @@ document.querySelector('#business-link').addEventListener('click', async (event)
 
 
 //create business
-document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
+ document.querySelector('#businessInfoForm').addEventListener('submit', async (event) => {
   event.preventDefault()
   const userId = localStorage.getItem('userId')
 
@@ -215,15 +214,11 @@ document.querySelector('#businessInfoForm').addEventListener('submit', async (ev
   } catch (error) {
     res.json(error)
   }
- })
-
-
- //// view a single business
-
+})
 
 
 //reviews
-const createReview=(businessId)=> { document.querySelector('#reviews').addEventListener('submit', async (event) => {
+const createReview=(businessId)=> document.querySelector('#reviews').addEventListener('submit', async (event) => {
   event.preventDefault()
   let userId = localStorage.getItem('userId')
 
@@ -250,10 +245,9 @@ try {
 
 } catch (error) {
     console.log(error)
-    alert('comment can not be added')
+    alert('Login to leave a comment!')
 }
 })
-}
 
 //Show reviews
 const showReviews = async (businessId) => {
@@ -263,20 +257,26 @@ const showReviews = async (businessId) => {
 
     let showReview = document.querySelector('.showReview')
     let reviewDetail = response.data.reviews
-
+    console.log(reviewDetail)
     while(showReview.firstChild) {
       showReview.firstChild.remove()
 }
 
-    for (let i = 0; i < reviewDetail.length; i++) {
+
+
+    for (let i = 0; i < reviewDetail.length ; i++) {
+      let newDiv = document.createElement('div')
+      console.log(reviewDetail[i])
+      newDiv.classList.add('newDiv')
       let h4 = document.createElement('h4')
-      showReview.append(h4)
-       h4.innerText = `Name: ${reviewDetail[i].user.name}, Headline:${reviewDetail[i].headline}, Content:${reviewDetail[i].content}, Rating:${reviewDetail[i].rating} `//this will show new added food
+
+      h4.innerText = `Name: ${reviewDetail[i].user.name}, Headline:${reviewDetail[i].headline}, Content:${reviewDetail[i].content}, Rating:${reviewDetail[i].rating} `
+      newDiv.append(h4)
+      showReview.append(newDiv)
       }
 
   } catch (error) {
     console.log('cat not get reviews')
-
   }
 }
 
@@ -289,12 +289,8 @@ document.querySelector('#logout-link').addEventListener('click', async (event) =
   showLoggedOut()
 })
 
-//delete
-document.querySelector('#delete').addEventListener('submit', async (event) => {
-  event.preventDefault()
-  const userId = response.data.user.id
-  localStorage.clearItem('userId', userId)
-  showLoggedOut()
 
-
+//When Home is clicked, page refreshes
+document.querySelector('#home-link').addEventListener('click', () => {
+  location.reload();
 })
