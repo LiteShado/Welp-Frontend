@@ -3,7 +3,7 @@
 const showLoggedIn = () => {
   document.querySelector('#signup-link').classList.add('hidden')
   document.querySelector('#login-link').classList.add('hidden')
-  
+
 }
 
 const showLoggedOut = () => {
@@ -127,7 +127,7 @@ document.querySelector('#home-link').addEventListener('click', async (event) => 
 let i
 let iNum = []
 document.querySelector('#business-link').addEventListener('click', async (event) => {
-  let response 
+  let response
   try {
     response = await axios.get(`http://localhost:3001/businesses/`)
     let allbusiness = document.querySelector('#allBusiness')
@@ -150,7 +150,7 @@ document.querySelector('#business-link').addEventListener('click', async (event)
      //// view a single business
      for (let j = 0; j < iNum.length; j ++){
        document.querySelector(`.business${iNum[j]}`).addEventListener('click', async (event) => {
-        
+
 
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'))
         document.querySelector('#singlebusiness').classList.remove('hidden')
@@ -165,10 +165,10 @@ document.querySelector('#business-link').addEventListener('click', async (event)
          businessAddress.innerText = response.data.business.address
          businessType.innerText = response.data.business.businessType
          businessDescription.innerText = response.data.business.description
-   
+
        console.log('you clicked on business')
        console.log(response)
-      
+
        let businessId = response.data.business.id
        createReview(businessId)
        showReviews(businessId)
@@ -176,11 +176,11 @@ document.querySelector('#business-link').addEventListener('click', async (event)
 
      }
     // console.log (i)
-    
+
   } catch (error) {
     console.log (error)
   }
-  
+
 })
 
 
@@ -207,7 +207,7 @@ document.querySelector('#businessInfoForm').addEventListener('submit', async (ev
      const response = await axios.post(`http://localhost:3001/businesses/${userId}/${typeid}`,{
       name: name,
       address: address,
-      businessType: typeText, 
+      businessType: typeText,
       description: description,
       typeId: typeid,
       userId: userId
@@ -218,7 +218,7 @@ document.querySelector('#businessInfoForm').addEventListener('submit', async (ev
  })
 
 
- //// view a single business 
+ //// view a single business
 
 
 
@@ -230,7 +230,7 @@ const createReview=(businessId)=> { document.querySelector('#reviews').addEventL
   const headline = document.querySelector('#reviewHeadline').value
   const content = document.querySelector('#reviewContent').value
   const rating = document.querySelector('#rating').value
- 
+
   // console.log(userId)
   // console.log(headline)
   // console.log(content)
@@ -239,7 +239,7 @@ const createReview=(businessId)=> { document.querySelector('#reviews').addEventL
 try {
     const response = await axios.post(`http://localhost:3001/reviews/${businessId}`, {
       headline: headline,
-      content: content,  
+      content: content,
       rating: rating,
       businessId: `${businessId}`,
       userId: userId
@@ -272,7 +272,7 @@ const showReviews = async (businessId) => {
       let h4 = document.createElement('h4')
       showReview.append(h4)
        h4.innerText = `Name: ${reviewDetail[i].user.name}, Headline:${reviewDetail[i].headline}, Content:${reviewDetail[i].content}, Rating:${reviewDetail[i].rating} `//this will show new added food
-      } 
+      }
 
   } catch (error) {
     console.log('cat not get reviews')
@@ -296,7 +296,5 @@ document.querySelector('#delete').addEventListener('submit', async (event) => {
   localStorage.clearItem('userId', userId)
   showLoggedOut()
 
-  
+
 })
-
-

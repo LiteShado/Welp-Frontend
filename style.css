@@ -4,7 +4,7 @@
 
 body {
     border: 10px solid red;
-    background-image: url("/welp.gif");
+    background-image: url("./welp.gif");
     background-repeat: repeat;
     margin: 0 auto;
     align-content: center;
@@ -35,7 +35,7 @@ body {
     justify-content: center;
     background-color: #570000;
     border: 20px solid transparent;
-    background-image: url("/welp.gif");
+    background-image: url("./welp.gif");
     background-repeat: repeat;
     /* border-color: #cccccc; */
     margin: 0 auto;
