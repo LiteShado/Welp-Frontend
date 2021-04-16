@@ -5,7 +5,7 @@ const rowdy = require('rowdy-logger')
 const routesReports = rowdy.begin(app)
 
 const path = require('path')
-// const replaceInFile = require('replace-in-file')
+const replaceInFile = require('replace-in-file')
 
 
 app.get('/', (req, res) => {
