@@ -180,6 +180,7 @@ document.querySelector('#business-link').addEventListener('click', async (event)
        console.log(response.data.user.name)
       
        let businessId = response.data.business.id
+      //  console.log(businessId)
        createReview(businessId)
        showReviews(businessId)
       })
@@ -268,27 +269,22 @@ const showReviews = async (businessId) => {
 
     let showReview = document.querySelector('.showReview')
     let reviewDetail = response.data.reviews
-
+    console.log(reviewDetail)
     while(showReview.firstChild) {
       showReview.firstChild.remove()
 }
 
-classNum = []
 
-    for (let i = 0; i < reviewDetail.length; i++) {
+
+    for (let i = 0; i < reviewDetail.length ; i++) {
       let newDiv = document.createElement('div')
-      classNum.push(i)
-      console.log(classNum)
-      newDiv.classList.add(`newDiv${i}`)
+      console.log(reviewDetail[i])
+      newDiv.classList.add('newDiv')
       let h4 = document.createElement('h4')
-      showReview.append(newDiv)
+      
+      h4.innerText = `Name: ${reviewDetail[i].user.name}, Headline:${reviewDetail[i].headline}, Content:${reviewDetail[i].content}, Rating:${reviewDetail[i].rating} `
       newDiv.append(h4)
-
-      let newDivFirstChild = document.querySelector('.showReview').firstChild
-      let newDivLastChild = document.querySelector('.showReview').lastChild
-      document.querySelector('.showReview').insertBefore(newDivLastChild, newDivFirstChild)
-  
-       h4.innerText = `Name: ${reviewDetail[i].user.name}, Headline:${reviewDetail[i].headline}, Content:${reviewDetail[i].content}, Rating:${reviewDetail[i].rating} `//this will show new added food
+      showReview.append(newDiv)
       } 
 
   } catch (error) {
